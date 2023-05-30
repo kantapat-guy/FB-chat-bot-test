@@ -1,3 +1,5 @@
+import axios from "axios"
+
 require("dotenv").config()
 
 let test = (req, res) => {
@@ -35,6 +37,12 @@ let postWebHook = (req, res) => {
 
       let sender_psid = webhook_event.sender.id
       console.log("Sender ID:", sender_psid)
+
+      if (webhook_event.message) {
+        handleMessage(sender_psid, webhook_event.message)
+      } else if (webhook_event.postback) {
+        handlePostBack(sender_psid, webhook_event.message)
+      }
     })
 
     // Returns a '200 OK' response to all requests
@@ -43,6 +51,43 @@ let postWebHook = (req, res) => {
     // Return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404)
   }
+}
+
+const callSendAPI = (sender_psid, response) => {
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    message: response,
+  }
+
+  axios
+    .post(
+      `https://graph.facebook.com/v17.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+      request_body
+    )
+    .then((res) => {
+      console.log("message sent!!")
+    })
+    .catch((err) => {
+      console.error("Unable to send message: ", err)
+    })
+}
+
+const handleMessage = (sender_psid, receive_message) => {
+  let response
+
+  if (receive_message.text) {
+    response = {
+      text: `Your sent message: ${receive_message}`,
+    }
+  }
+
+  callSendAPI(sender_psid, response)
+}
+
+const handlePostBack = () => {
+  console.log("postBack")
 }
 
 module.exports = {
