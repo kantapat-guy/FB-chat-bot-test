@@ -1,5 +1,5 @@
 require("dotenv").config()
-const axios = require('axios')
+const axios = require("axios")
 
 let test = (req, res) => {
   return res.send("Hello again")
@@ -78,7 +78,7 @@ const handleMessage = (sender_psid, receive_message) => {
 
   if (receive_message.text) {
     response = {
-      text: `Your sent message: ${receive_message}`,
+      text: `Your sent message: ${receive_message.text}, Thank you for your message. I appreciate it and will respond as soon as possible.`,
     }
   }
 
