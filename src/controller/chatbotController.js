@@ -65,7 +65,8 @@ const callSendAPI = async (sender_psid, response) => {
   try {
     await axios.post(
       `https://graph.facebook.com/v17.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-      request_body
+      request_body,
+      { headers: { "content-type": "application/json" } }
     )
     console.log("message sent!!")
   } catch (err) {
