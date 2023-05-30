@@ -1,6 +1,5 @@
 require("dotenv").config()
 
-
 let test = (req, res) => {
   return res.send("Hello again")
 }
@@ -33,6 +32,9 @@ let postWebHook = (req, res) => {
     boby.entry.forEach(function (entry) {
       let webhook_event = entry.messaging[0]
       console.log(webhook_event)
+
+      let sender_psid = webhook_event.sender.id
+      console.log("Sender ID:", sender_psid)
     })
 
     // Returns a '200 OK' response to all requests

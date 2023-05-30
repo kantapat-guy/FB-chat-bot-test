@@ -2,10 +2,10 @@
   "name": "chat-bot",
   "version": "1.0.0",
   "description": "chat bot for portforlio",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/server.js"
+    "start": "nodemon --exec babel-node src/index.js"
   },
   "author": "Guy",
   "license": "ISC",
