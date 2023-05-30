@@ -38,10 +38,12 @@ const postWebHook = (req, res) => {
       console.log("Sender ID:", sender_psid)
 
       if (webhook_event.message) {
+        console.log("trigger event......")
         handleMessage(sender_psid, webhook_event.message)
-      } else if (webhook_event.postback) {
-        handlePostBack(sender_psid, webhook_event.message)
       }
+      //   else if (webhook_event.postback) {
+      //     handlePostBack(sender_psid, webhook_event.message)
+      //   }
     })
 
     // Returns a '200 OK' response to all requests
