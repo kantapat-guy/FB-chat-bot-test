@@ -1,11 +1,11 @@
 require("dotenv").config()
 const axios = require("axios")
 
-let test = (req, res) => {
+const test = (req, res) => {
   return res.send("Hello again")
 }
 
-let getWebHook = (req, res) => {
+const getWebHook = (req, res) => {
   // Parse the query params
   let mode = req.query["hub.mode"]
   let token = req.query["hub.verify_token"]
@@ -25,7 +25,7 @@ let getWebHook = (req, res) => {
   }
 }
 
-let postWebHook = (req, res) => {
+const postWebHook = (req, res) => {
   let body = req.body
 
   // Check if this is an event from a page subscription
@@ -52,7 +52,7 @@ let postWebHook = (req, res) => {
   }
 }
 
-const callSendAPI = (sender_psid, response) => {
+const callSendAPI = async (sender_psid, response) => {
   let request_body = {
     recipient: {
       id: sender_psid,
@@ -60,7 +60,7 @@ const callSendAPI = (sender_psid, response) => {
     message: response,
   }
 
-  axios
+  await axios
     .post(
       `https://graph.facebook.com/v17.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
       request_body
