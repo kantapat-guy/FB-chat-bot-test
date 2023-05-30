@@ -1,5 +1,5 @@
 require("dotenv").config()
-import axios from "axios"
+const axios = require('axios')
 
 let test = (req, res) => {
   return res.send("Hello again")
