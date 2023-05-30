@@ -29,7 +29,7 @@ let postWebHook = (req, res) => {
 
   // Check if this is an event from a page subscription
   if (body.object === "page") {
-    boby.entry.forEach(function (entry) {
+    body.entry.forEach(function (entry) {
       let webhook_event = entry.messaging[0]
       console.log(webhook_event)
 
