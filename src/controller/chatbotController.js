@@ -38,19 +38,23 @@ const postWebHook = (req, res) => {
     // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED")
 
-    body.entry.forEach(function (entry) {
-      let webhook_event = entry.messaging[0]
-      console.log(webhook_event)
+    body.entry.forEach(async function (entry) {
+      // let webhook_event = entry.messaging[0]
+      // console.log(webhook_event)
 
-      let sender_psid = webhook_event.sender.id
-      console.log("Sender ID:", sender_psid)
+      // Iterate over webhook events - there may be multiple
+      entry.messaging.forEach(async function (webhookEvent) {
+        let sender_psid = webhookEvent.sender.id
+        console.log("Sender ID:", sender_psid)
+  
+        if (webhookEvent.message) {
+          console.log("trigger event......")
+          handleMessage(sender_psid, webhookEvent.message)
+        } else if (webhookEvent.postback) {
+          handlePostBack(sender_psid, webhookEvent.message)
+        }
+      })
 
-      if (webhook_event.message) {
-        console.log("trigger event......")
-        handleMessage(sender_psid, webhook_event.message)
-      } else if (webhook_event.postback) {
-        handlePostBack(sender_psid, webhook_event.message)
-      }
     })
   } else {
     // Return a '404 Not Found' if event is not from a page subscription
