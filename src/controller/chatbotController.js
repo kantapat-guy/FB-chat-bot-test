@@ -58,12 +58,27 @@ const postWebHook = (req, res) => {
   }
 }
 
+const handleMessage = (sender_psid, receive_message) => {
+  console.log("handle message......")
+
+  let response = {}
+
+  if (receive_message.text) {
+    response = {
+      text: `Your sent message: ${receive_message.text}, Thank you for your message. I appreciate it and will respond as soon as possible.`,
+    }
+  }
+
+  callSendAPI(sender_psid, response)
+}
+
 const callSendAPI = async (sender_psid, res_user) => {
   let request_body = {
     recipient: {
       id: sender_psid,
     },
     message: res_user,
+    messaging_type: "RESPONSE"
   }
   // const url = `https://graph.facebook.com/v17.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`
 
@@ -97,20 +112,6 @@ const callSendAPI = async (sender_psid, res_user) => {
   // }
 
   console.log("handle send api......")
-}
-
-const handleMessage = (sender_psid, receive_message) => {
-  console.log("handle message......")
-
-  let response
-
-  if (receive_message.text) {
-    response = {
-      text: `Your sent message: ${receive_message.text}, Thank you for your message. I appreciate it and will respond as soon as possible.`,
-    }
-  }
-
-  callSendAPI(sender_psid, response)
 }
 
 const handlePostBack = () => {
