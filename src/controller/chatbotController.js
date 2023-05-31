@@ -1,5 +1,6 @@
 require("dotenv").config()
-const axios = require("axios")
+fetch = require("node-fetch"),
+{ URL, URLSearchParams } = require("url");
 
 const test = (req, res) => {
   return res.send("Hello again")
