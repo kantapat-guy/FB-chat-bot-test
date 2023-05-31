@@ -1,6 +1,7 @@
 require("dotenv").config()
-fetch = require("node-fetch"),
-{ URL, URLSearchParams } = require("url");
+const fetch = require("node-fetch")
+const { URL, URLSearchParams } = require("url");
+// import fetch from "node-fetch";
 
 const test = (req, res) => {
   return res.send("Hello again")
